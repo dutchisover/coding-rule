@@ -1,0 +1,220 @@
+@use 'sass:math';
+////////////// SCSS変数 //////////////
+
+// 色
+$color_black: #222;
+$color_bg: #fff;
+$color_nav_bg: #bbdeed;
+$color_blue: #81c1dd;
+$color_lightgray: #c7c7c7;
+
+$color_cat_idoll: #fff0ff;
+$color_cat_sugarsugar: #fffcf5;
+$color_cat_other: #c7c7c7;
+
+$color_cf_key: #d97575;
+$color_cf_link: #153ab4;
+
+// フォント
+$gothic: 'Noto Sans JP', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'MS Pゴシック', 'MS PGothic', sans-serif;
+$mincho: 'Zen Old Mincho', '游明朝体', 'Yu Mincho', YuMincho, 'ヒラギノ明朝 Pro', 'Hiragino Mincho Pro', 'MS P明朝', 'MS PMincho', serif;
+$english: 'Marcellus', serif;
+$maru: 'Zen Maru Gothic', 'Yu Gothic', YuGothic, 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'MS Pゴシック', 'MS PGothic', sans-serif;
+
+// ウェイト
+$regular: 400;
+$medium: 500;
+$bold: 700;
+
+// 標準のサイズ
+$font_size: 16rem;
+
+// 標準の文字間
+$letter_spacing: 0;
+
+// 標準の行間
+$line_height: 1.75;
+
+// カーニング（font-feature-settings： "palt"）
+$ffs: unset;
+
+// bodyの背景色
+$body_bg: $color_bg;
+
+// アニメーション速度
+$speed: .4s;
+
+
+
+////////////// CSS変数 //////////////
+
+:root {
+  // --hoge: "";
+}
+
+
+
+
+////////////// Mixin //////////////
+
+//コンテンツ幅（px）
+$sm: 520;
+$md: 768;
+$lg: 900;
+$xl: 1080;
+$mx: 1280;
+
+
+////////////// デザインカンプに合わせて調整する項目 //////////////
+// PCのコンテンツ幅（可変がスタートする幅）を入れてください
+$board: 1200;
+// スマホカンプのアートボード幅を入れてください
+$board-sp: 375;
+
+
+
+
+
+//メディアクエリ
+$breakpoints: (
+  'def': '(max-width: #{$md}px)',
+  'sm': '(max-width: #{$sm}px)',
+  'md': '(max-width: #{$md}px)',
+  'lg': '(max-width: #{$lg}px)',
+  'xl': '(max-width: #{$xl}px)',
+  'mx': '(max-width: #{$mx}px)',
+  'pc_only': '(min-width: #{$md+1}px)',
+  ) !default;
+
+//コンテンツ幅
+$wrapper: (
+  'sm': #{$sm},
+  'md': #{$md},
+  'lg': #{$lg},
+  'xl': #{$xl},
+  'mx': #{$mx},
+  ) !default;
+
+
+//メディアクエリ
+@mixin media($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+// 使用例
+// @include mq() {
+//     color: red;
+// }
+
+
+
+// wrapper自動化
+@mixin cp_wrapper($max: xl, $w: 90%) {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: #{map-get($wrapper, $max)}px;
+  width: $w;
+
+  @include media() {
+    width: 94%;
+  }
+
+  @content;
+}
+
+// 使用例
+// @include cp_wrapper($max: sm);
+
+
+
+
+
+// clamp自動化
+// @function clp($f: 16, $max: mx) {
+//   $mw: #{map-get($wrapper, $max)};
+//   $ft: $f * 1vw;
+//   @return clamp(#{$f * .65}px, calc(#{$ft} / #{$mw} * 90), #{$f}px
+//   );
+// }
+
+// 使用例
+// font-size: clp(20);
+
+
+
+
+// vw自動化（スマホ専用）
+@function vw($fontSize: 16, $boardSize: $board-sp) {
+  @return #{math.div($fontSize * 10, $boardSize)}vw;
+}
+
+
+// 使用例
+// font-size: vw(20);
+
+
+
+
+// 行間の上下余白を消しながら line-height を設定する
+@mixin lineHeight($line-height: #{$line_height}) {
+  line-height: #{$line-height};
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+  }
+
+  &::before {
+    margin-top: calc((1 - #{$line-height}) * .5em
+    ); //文字上の余白を消す
+  }
+
+  &::after {
+    margin-bottom: calc((1 - #{$line-height}) * .5em); //文字下の余白を消す
+  }
+}
+
+
+// ホバー
+@mixin hover() {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+
+// 非サポート
+
+
+// html・body {
+%html {
+  font-size: clamp(calc(6.25% * .25), calc(10vw / $board * 10), 6.25%);
+
+  @include media() {
+    font-size: vw(10);
+  }
+}
+
+%body {
+  background-color: $body_bg;
+  color: $color_black;
+  letter-spacing: $letter_spacing;
+  font-weight: $regular;
+  font-size: $font_size;
+  font-family: $gothic;
+  line-height: $line_height;
+
+  font-feature-settings: $ffs;
+
+  // 行間の上下余白を消す（Figmaの時は不要）
+  & :where(h1, h2, h3, h4, h5, h6, p) {
+    @include lineHeight($line_height);
+  }
+}

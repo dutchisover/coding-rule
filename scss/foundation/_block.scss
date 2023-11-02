@@ -1,0 +1,123 @@
+@use './setting' as *;
+
+// 投稿ブロック
+%block {
+  // 大見出し（タイトル）
+  .page_title,
+  .wp-block-post-title {
+    //
+  }
+
+  // ボタン
+  .button_area {
+    display: flex;
+    justify-content: center;
+  }
+
+  .wp-block-button,
+  .button_area .button {
+    position: relative;
+
+    @include hover {
+      //
+    }
+
+    &__link,
+    .button_link {
+      //
+    }
+
+    &::before {
+      content: '';
+    }
+  }
+
+
+  // テーブル
+  .wp-block-table {
+    font-size: 18rem;
+
+    @include media() {
+      font-size: 12rem;
+    }
+
+    * {
+      border: 0;
+    }
+
+    tr {
+      border-bottom: 1px solid #c7c7c7;
+
+      @include media() {
+        display: flex;
+        flex-direction: column;
+        padding: 40rem 0 30rem;
+      }
+
+      &:first-child {
+        padding-top: 0;
+      }
+    }
+
+    td {
+      padding: 50rem 0;
+
+      @include media() {
+        display: block;
+        padding: 0;
+        width: 100%;
+
+        & + td {
+          margin-top: 15rem;
+        }
+      }
+
+      &:first-child {
+        width: 280rem;
+      }
+    }
+
+    // 下部にボタン
+    & + .wp-block-buttons {
+      margin-top: 150rem;
+
+      @include media() {
+        margin-top: 80rem;
+      }
+    }
+  }
+
+  // リスト
+  ul {
+    margin-top: 1em;
+  }
+
+  li {
+    &::before {
+      content: '・';
+    }
+  }
+
+
+  // 記事中見出し
+  h3.wp-block-heading {
+    font-size: 30rem;
+    line-height: 2.5;
+
+    @include media() {
+      font-size: 15rem;
+    }
+  }
+
+  // 記事本文
+  .wp-block-column p {
+    margin-top: 25rem;
+    font-weight: $regular;
+    font-size: 20rem;
+    line-height: 2;
+
+    @include media() {
+      font-size: 13rem;
+    }
+  }
+}

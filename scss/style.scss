@@ -1,0 +1,27 @@
+// 初期設定
+@use './foundation/reset';
+@use './foundation/animate';
+@use './foundation/base';
+
+
+// 共通パーツ
+@use './object/component';
+
+
+// ページ共通のレイアウト
+@use './layout/header';
+@use './layout/wrapper';
+@use './layout/section';
+@use './layout/footer';
+
+
+// 特定のセクションやエリア
+@use './object/project/single';
+@use './object/project/page';
+@use './object/project/archive';
+@use './object/project/top';
+@use './object/project/page404';
+
+
+// 強制的に上書き
+@use './object/utility';

@@ -1,0 +1,47 @@
+@use './setting' as *;
+
+
+// ページ内リンクにアニメーション付与
+html {
+  @extend %html;
+}
+
+// サイト全体の基本設定
+body {
+  @extend %body;
+
+  a {
+    transition: color .4s;
+
+    @include hover {
+      opacity: .6;
+    }
+
+    &:focus {
+      text-decoration: none;
+    }
+
+    img {
+      transition: opacity .4s;
+    }
+
+    &[href^='tel:'] {
+      color: inherit;
+    }
+  }
+
+  // 画像全て適用　はみ出さないようにしてすき間できるバグ対策
+  img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+  }
+
+  *,
+  *::before,
+  *::after {
+    @include media() {
+      max-width: 100%;
+    }
+  }
+}

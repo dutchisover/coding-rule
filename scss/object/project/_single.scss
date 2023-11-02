@@ -1,0 +1,5 @@
+@use '../../foundation/index' as *;
+
+.single_main {
+  @extend %block;
+}

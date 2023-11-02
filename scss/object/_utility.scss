@@ -1,0 +1,16 @@
+// Utilllity = 強制的に上書きするコード
+
+@use '../foundation/index' as *;
+
+
+.pc_none {
+  @include media(pc_only) {
+    display: none !important;
+  }
+}
+
+.sp_none {
+  @include media() {
+    display: none !important;
+  }
+}

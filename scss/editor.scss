@@ -1,0 +1,13 @@
+@use './foundation/index' as *;
+
+html.interface-interface-skeleton__html-container {
+  @extend %html;
+}
+
+.editor-styles-wrapper {
+  @extend %body;
+}
+
+#editor {
+  @extend %block;
+}
